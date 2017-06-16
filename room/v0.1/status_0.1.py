@@ -8,6 +8,7 @@ import winsound
 global room_id
 global filename
 global timer
+global iel
 
 def registerUrl():
 	try:
@@ -53,17 +54,23 @@ def fun_timer(im):
 	jsonf = readFile()
 	i = praserJsonFile(jsonf,im)
 	print('本地时间:',time.strftime("%Y-%m-%d %X"))
-	timer = threading.Timer(10,fun_timer,[i])
+	timer = threading.Timer(iel,fun_timer,[i])
 	timer.start()
 	
 if __name__ == "__main__":
 	room_id = '220149'
+	iel = 30
 	print('输入的房间ID：')
 	if len(sys.argv) == 2 :
 		print(sys.argv[1])
 		room_id = sys.argv[1]
 	else :
-		print(room_id)
+		if len(sys.argv) == 3 :
+			print(sys.argv[1])
+			room_id = sys.argv[1]
+			iel = int(sys.argv[2])
+		else :
+			print(room_id)
 	filename ='Room'+room_id+'.json'
 	i = 1
 	timer = threading.Timer(1,fun_timer,[i])
